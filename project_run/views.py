@@ -1,4 +1,7 @@
 from django.http import JsonResponse
+from rest_framework import viewsets
+from project_run.models import Run
+from project_run.serializers import RunSerializer
 
 def company_details(request):
     """
@@ -10,3 +13,10 @@ def company_details(request):
         'contacts': 'info@awesometech.com, +1-123-456-7890, 123 Tech Street, Silicon Valley'
     }
     return JsonResponse(data)
+
+class RunViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows runs to be viewed or edited.
+    """
+    queryset = Run.objects.all()
+    serializer_class = RunSerializer
