@@ -11,7 +11,7 @@ def company_details(request):
     data = {
         'company_name': settings.COMPANY_NAME,
         'slogan': settings.SLOGAN,
-        'contacts': 'info@awesometech.com, +1-123-456-7890, 123 Tech Street, Silicon Valley'
+        'contacts': settings.CONTACTS
     }
     return JsonResponse(data)
 
