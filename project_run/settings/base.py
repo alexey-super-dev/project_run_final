@@ -113,5 +113,5 @@ STATIC_ROOT = 'static'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CONTACTS = 1 
-SLOGAN = None
+SLOGAN = 'asdasd'
 COMPANY_NAME = 'a'
