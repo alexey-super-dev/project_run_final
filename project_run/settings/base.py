@@ -109,6 +109,9 @@ STATIC_ROOT = 'static'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+CONTACTS = 1
+SLOGAN = 'asdasd'
+COMPANY_NAME = 'a'
 
 COMPANY_NAME = os.environ.get('COMPANY_NAME', 'Run Project')
 COMPANY_SLOGAN = os.environ.get('COMPANY_SLOGAN', 'Run or Die')
