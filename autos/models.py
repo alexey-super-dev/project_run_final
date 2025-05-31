@@ -13,7 +13,7 @@ class Run(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     status = models.CharField(max_length=50, default='init')
     distance = models.FloatField(null=True)
-    run_time_seconds = models.IntegerField(null=True)
+    run_time_seconds = models.IntegerField(null=False)
     speed = models.FloatField(default=0)
     carbon_emission = models.IntegerField(default=0)
 
