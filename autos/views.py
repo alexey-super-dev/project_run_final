@@ -413,7 +413,7 @@ class UploadXLSX(APIView):
             if not type(row[3]) == float or not (-90 <= row[3] <= 90):
                 valid = False
 
-            if not type(row[4]) == float or not (-180 <= row[4] <= 180):
+            if not type(row[4]) == float or not (-90 <= row[4] <= 90):
                 valid = False
 
             if not validate_url(row[5]):
