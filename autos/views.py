@@ -230,7 +230,8 @@ class UsersViewSet(viewsets.ReadOnlyModelViewSet):
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
     search_fields = ['first_name', 'last_name', 'id']
     pagination_class = CustomPagination
-    ordering_fields = ['date_joined']
+    ordering_fields = ['date_joined', 'runs_finished_count', 'average_rating']
+    ordering = ['date_joined']
 
     def get_serializer_class(self):
         if self.action == 'retrieve':
@@ -263,6 +264,20 @@ class UsersViewSet(viewsets.ReadOnlyModelViewSet):
             queryset = queryset.filter(is_staff=False)
 
         queryset = queryset.annotate(average_rating=Avg('coaches__rate'))
+
+        # Get the ordering parameter from the request
+        ordering = self.request.query_params.get('ordering', None)
+
+        # If ordering is specified, apply it to the queryset
+        if ordering:
+            # Remove the '-' if present to check if the field is valid
+            order_field = ordering[1:] if ordering.startswith('-') else ordering
+
+            # Check if the field is in ordering_fields
+            valid_fields = [f if isinstance(f, str) else f[0] for f in self.ordering_fields]
+            if order_field in valid_fields:
+                queryset = queryset.order_by(ordering)
+
         return queryset
 
 
@@ -440,4 +455,3 @@ class UploadXLSX(APIView):
 class CollectableItemViewSet(viewsets.ModelViewSet):
     queryset = CollectableItem.objects.all()
     serializer_class = CollectableItemSerializer
-
