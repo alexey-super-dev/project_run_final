@@ -440,3 +440,4 @@ class UploadXLSX(APIView):
 class CollectableItemViewSet(viewsets.ModelViewSet):
     queryset = CollectableItem.objects.all()
     serializer_class = CollectableItemSerializer
+
