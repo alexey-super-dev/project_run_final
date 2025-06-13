@@ -121,63 +121,63 @@ class RunsViewSet(viewsets.ModelViewSet):
         run.status = 'in_progress'  # Например, метод start() запускает ваш объект
         run.save()
         return Response({'status': full_url}, status=status.HTTP_200_OK)
-
-    @action(detail=True, methods=['post'], url_path='stop')
-    def stop_run(self, request, pk=None):
-        try:
-            run = Run.objects.get(pk=pk)
-        except Run.DoesNotExist:
-            return Response({'error': 'Run not found'}, status=status.HTTP_404_NOT_FOUND)
-
-        if run.status != 'in_progress':
-            return Response({'status': 'Run not in progress'}, status=status.HTTP_400_BAD_REQUEST)
-
-        run.status = 'finished'
-        run.save()
-
-        # Assuming positions_list is your QuerySet:
-        positions_list = Position.objects.filter(run=run).values('latitude', 'longitude')
-
-        # Convert to list of tuples
-        running_routes = [
-            (position['latitude'], position['longitude'])
-            for position in positions_list
-        ]
-
-        total_distance = 0
-        for i in range(len(running_routes) - 1):
-            start = running_routes[i]
-            end = running_routes[i + 1]
-            distance = geodesic(start, end).kilometers
-            total_distance += distance
-
-        run.distance = round(total_distance, 2)
-        # run.speed = calculate_median(list(Position.objects.filter(run=run).values_list('speed', flat=True)))
-        if Position.objects.filter(run=run).exists():
-            run.speed = round(calculate_median(list(Position.objects.filter(run=run).values_list('speed', flat=True))),
-                              2)
-            # run.run_time_seconds = calculate_run_time_by_id(run)
-            run.run_time_seconds = calculate_run_time_different_way(run)
-
-        # run.calculate_run_time_by_idon_emission = call_carboninterface('123', run.distance)
-        run.save()
-
-        if Run.objects.filter(athlete_id=run.athlete_id, status='finished').count() == 10:
-            ChallengeRecord.objects.create(athlete_id=run.athlete_id, name='RUN_10')
-
-        # if Run.objects.filter(athlete_id=run.athlete_id, status='finished').aggregate(dis=Sum('distance')).get('dis', None) > 50:
-
-        amount = 0
-        for run in Run.objects.filter(athlete_id=run.athlete_id, status='finished'):
-            amount += run.distance
-            if amount > 50:
-                ChallengeRecord.objects.get_or_create(athlete_id=run.athlete_id, name='RUN_50')
-
-        if (run.run_time_seconds and run.run_time_seconds <= 600) and (run.distance and run.distance >= 2):
-            ChallengeRecord.objects.get_or_create(athlete_id=run.athlete_id, name='RUN_2_10')
-
-        return Response({'status': 'run stopped'}, status=status.HTTP_200_OK)
-
+    #
+    # @action(detail=True, methods=['post'], url_path='stop')
+    # def stop_run(self, request, pk=None):
+    #     try:
+    #         run = Run.objects.get(pk=pk)
+    #     except Run.DoesNotExist:
+    #         return Response({'error': 'Run not found'}, status=status.HTTP_404_NOT_FOUND)
+    #
+    #     if run.status != 'in_progress':
+    #         return Response({'status': 'Run not in progress'}, status=status.HTTP_400_BAD_REQUEST)
+    #
+    #     run.status = 'finished'
+    #     run.save()
+    #
+    #     # Assuming positions_list is your QuerySet:
+    #     positions_list = Position.objects.filter(run=run).values('latitude', 'longitude')
+    #
+    #     # Convert to list of tuples
+    #     running_routes = [
+    #         (position['latitude'], position['longitude'])
+    #         for position in positions_list
+    #     ]
+    #
+    #     total_distance = 0
+    #     for i in range(len(running_routes) - 1):
+    #         start = running_routes[i]
+    #         end = running_routes[i + 1]
+    #         distance = geodesic(start, end).kilometers
+    #         total_distance += distance
+    #
+    #     run.distance = round(total_distance, 2)
+    #     # run.speed = calculate_median(list(Position.objects.filter(run=run).values_list('speed', flat=True)))
+    #     if Position.objects.filter(run=run).exists():
+    #         run.speed = round(calculate_median(list(Position.objects.filter(run=run).values_list('speed', flat=True))),
+    #                           2)
+    #         # run.run_time_seconds = calculate_run_time_by_id(run)
+    #         run.run_time_seconds = calculate_run_time_different_way(run)
+    #
+    #     # run.calculate_run_time_by_idon_emission = call_carboninterface('123', run.distance)
+    #     run.save()
+    #
+    #     if Run.objects.filter(athlete_id=run.athlete_id, status='finished').count() == 10:
+    #         ChallengeRecord.objects.create(athlete_id=run.athlete_id, name='RUN_10')
+    #
+    #     # if Run.objects.filter(athlete_id=run.athlete_id, status='finished').aggregate(dis=Sum('distance')).get('dis', None) > 50:
+    #
+    #     amount = 0
+    #     for run in Run.objects.filter(athlete_id=run.athlete_id, status='finished'):
+    #         amount += run.distance
+    #         if amount > 50:
+    #             ChallengeRecord.objects.get_or_create(athlete_id=run.athlete_id, name='RUN_50')
+    #
+    #     if (run.run_time_seconds and run.run_time_seconds <= 600) and (run.distance and run.distance >= 2):
+    #         ChallengeRecord.objects.get_or_create(athlete_id=run.athlete_id, name='RUN_2_10')
+    #
+    #     return Response({'status': 'run stopped'}, status=status.HTTP_200_OK)
+    #
 
 class PositionViewSet(viewsets.ModelViewSet):
     queryset = Position.objects.filter()
