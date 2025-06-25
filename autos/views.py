@@ -124,7 +124,7 @@ class RunsViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['post'], url_path='stop')
     def stop_run(self, request, pk=None):
-        return Response({'status': 'run stopped'}, status=status.HTTP_200_OK)
+
         try:
             run = Run.objects.get(pk=pk)
         except Run.DoesNotExist:
@@ -134,6 +134,8 @@ class RunsViewSet(viewsets.ModelViewSet):
             return Response({'status': 'Run not in progress'}, status=status.HTTP_400_BAD_REQUEST)
 
         run.status = 'finished'
+        return Response({'status': 'run stopped'}, status=status.HTTP_200_OK)
+
         run.save()
 
         # Assuming positions_list is your QuerySet:
