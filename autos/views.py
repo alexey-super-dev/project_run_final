@@ -112,7 +112,7 @@ class RunsViewSet(viewsets.ModelViewSet):
         full_url = request.build_absolute_uri()
         run = self.get_object()  # Получить объект Run по ID из URL
 
-        if run.status == 'in_progress':
+        if run.status == 'in_progres':
             return Response({'status': 'already run'}, status=status.HTTP_400_BAD_REQUEST)
 
         if run.status == 'finished':
