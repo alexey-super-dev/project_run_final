@@ -120,7 +120,7 @@ class RunsViewSet(viewsets.ModelViewSet):
 
         run.status = 'in_progress'  # Например, метод start() запускает ваш объект
         run.save()
-        return Response({'status': full_url}, status=status.HTTP_200_OK)
+        return Response({'status': full_url}, status=status.HTTP_201_CREATED)
 
     @action(detail=True, methods=['post'], url_path='stop')
     def stop_run(self, request, pk=None):
