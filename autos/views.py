@@ -109,6 +109,7 @@ class RunsViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['post'], url_path='start')
     def start_run(self, request, pk=None):
+        1/0
         full_url = request.build_absolute_uri()
         run = self.get_object()  # Получить объект Run по ID из URL
 
