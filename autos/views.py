@@ -132,10 +132,9 @@ class RunsViewSet(viewsets.ModelViewSet):
         if run.status != 'in_progress':
             return Response({'status': 'Run not in progress'}, status=status.HTTP_400_BAD_REQUEST)
 
-        run.status = 'finishet'
+        run.status = 'finished'
 
-
-        run.save()
+        # run.save()
 
         # Assuming positions_list is your QuerySet:
         positions_list = Position.objects.filter(run=run).values('latitude', 'longitude')
