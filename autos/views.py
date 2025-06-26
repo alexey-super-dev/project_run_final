@@ -124,6 +124,8 @@ class RunsViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['post'], url_path='stop')
     def stop_run(self, request, pk=None):
+        print('test_commit')
+        return Response({'status': 'run stopped'}, status=status.HTTP_200_OK)
 
         try:
             run = Run.objects.get(pk=pk)
@@ -134,8 +136,7 @@ class RunsViewSet(viewsets.ModelViewSet):
             return Response({'status': 'Run not in progress'}, status=status.HTTP_400_BAD_REQUEST)
 
         run.status = 'finished'
-        print('test_commit')
-        return Response({'status': 'run stopped'}, status=status.HTTP_200_OK)
+
 
         run.save()
 
