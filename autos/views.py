@@ -94,7 +94,7 @@ class CustomPagination(PageNumberPagination):
 
 class RunPagination(PageNumberPagination):
     # page_size = 9  # Количество объектов на странице по умолчанию
-    page_size_query_param = 'size'
+    page_size_query_param = 'max_size'
     # max_page_size = 12
 #
 
@@ -105,7 +105,7 @@ class RunsViewSet(viewsets.ModelViewSet):
     # filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
     # filterset_fields = ['status', 'athlete']
     ordering_fields = ['created_at']
-    # pagination_class = RunPagination
+    pagination_class = RunPagination
 
     @action(detail=True, methods=['post'], url_path='start')
     def start_run(self, request, pk=None):
