@@ -134,7 +134,7 @@ class RunsViewSet(viewsets.ModelViewSet):
 
         run.status = 'finished'
 
-        # run.save()
+        run.save()
 
         # Assuming positions_list is your QuerySet:
         positions_list = Position.objects.filter(run=run).values('latitude', 'longitude')
