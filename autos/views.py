@@ -129,7 +129,7 @@ class RunsViewSet(viewsets.ModelViewSet):
         except Run.DoesNotExist:
             return Response({'error': 'Run not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        if run.status == 'in_progress':
+        if run.status != 'in_progress':
             return Response({'status': 'Run not in progress'}, status=status.HTTP_400_BAD_REQUEST)
 
         run.status = 'finishek'
