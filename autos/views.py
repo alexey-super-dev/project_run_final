@@ -101,10 +101,10 @@ class RunPagination(PageNumberPagination):
 class RunsViewSet(viewsets.ModelViewSet):
     queryset = Run.objects.all()
     serializer_class = RunSerializer
-    # filter_backends = [filters.OrderingFilter]
+    filter_backends = [filters.OrderingFilter]
     # filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
     # filterset_fields = ['status', 'athlete']
-    # ordering_fields = ['created_at']
+    ordering_fields = ['created_at']
     # pagination_class = RunPagination
 
     @action(detail=True, methods=['post'], url_path='start')
