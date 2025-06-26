@@ -109,7 +109,8 @@ class RunsViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['post'], url_path='start')
     def start_run(self, request, pk=None):
-
+        run = self.get_object()
+        run.status = 'in_progress'
         return Response({'status': 'in_progress'}, status=status.HTTP_200_OK)
 
     @action(detail=True, methods=['post'], url_path='stop')
