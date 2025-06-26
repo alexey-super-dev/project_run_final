@@ -161,7 +161,7 @@ class RunsViewSet(viewsets.ModelViewSet):
             run.run_time_seconds = calculate_run_time_different_way(run)
 
         # run.calculate_run_time_by_idon_emission = call_carboninterface('123', run.distance)
-        run.save()
+        # run.save()
 
         if Run.objects.filter(athlete_id=run.athlete_id, status='finished').count() == 10:
             ChallengeRecord.objects.create(athlete_id=run.athlete_id, name='RUN_10')
