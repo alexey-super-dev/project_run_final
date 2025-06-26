@@ -129,12 +129,12 @@ class RunsViewSet(viewsets.ModelViewSet):
         except Run.DoesNotExist:
             return Response({'error': 'Run not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        if run.status == 'in_progress':
+        if run.status != 'in_progress':
             return Response({'status': 'Run not in progress'}, status=status.HTTP_400_BAD_REQUEST)
 
-        run.status = 'finished'
+        run.status = 'finishet'
 
-        run.save()
+        # run.save()
 
         # Assuming positions_list is your QuerySet:
         positions_list = Position.objects.filter(run=run).values('latitude', 'longitude')
@@ -161,7 +161,7 @@ class RunsViewSet(viewsets.ModelViewSet):
             run.run_time_seconds = calculate_run_time_different_way(run)
 
         # run.calculate_run_time_by_idon_emission = call_carboninterface('123', run.distance)
-        run.save()
+        # run.save()
 
         if Run.objects.filter(athlete_id=run.athlete_id, status='finished').count() == 10:
             ChallengeRecord.objects.create(athlete_id=run.athlete_id, name='RUN_10')
