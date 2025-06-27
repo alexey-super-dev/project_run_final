@@ -122,6 +122,7 @@ class RunsViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['post'], url_path='stop')
     def stop_run(self, request, pk=None):
+        random.randint('a', 'b')
         try:
             run = Run.objects.get(pk=pk)
         except Run.DoesNotExist:
