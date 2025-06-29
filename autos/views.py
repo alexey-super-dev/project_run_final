@@ -224,85 +224,85 @@ class PositionViewSet(viewsets.ModelViewSet):
         return position
 
 
-# class UsersViewSet(viewsets.ReadOnlyModelViewSet):
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
-#     filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
-#     search_fields = ['first_name', 'last_name', 'id']
-#     pagination_class = CustomPagination
-#     ordering_fields = ['date_joined', 'runs_finished_count', 'average_rating']
-#
-#     def get_serializer_class(self):
-#         if self.action == 'retrieve':
-#             user = self.get_object()
-#             if user.is_staff:
-#                 return DetailCoachSerializer
-#             return DetailAthleteSerializer
-#         return UserSerializer
-#
-#     def get_queryset(self):
-#         queryset = super().get_queryset()
-#
-#         # Exclude superusers from the queryset
-#         queryset = queryset.filter(is_superuser=False)
-#
-#         # Get the 'type' query parameter
-#         user_type = self.request.query_params.get('type', None)
-#
-#         # Annotate runs_finished_count for all users
-#         queryset = queryset.annotate(
-#             runs_finished_count=Count('run', filter=Q(run__status='finished'))
-#         )
-#
-#         # If filtering for coaches, annotate average_rating
-#         if user_type == 'coach':
-#             queryset = queryset.filter(is_staff=True)
-#             # queryset = queryset.annotate(average_rating=Avg('coaches__rate'))
-#
-#         elif user_type == 'athlete':
-#             queryset = queryset.filter(is_staff=False)
-#
-#         queryset = queryset.annotate(average_rating=Avg('coaches__rate'))
-#
-#         # Get the ordering parameter from the request
-#         ordering = self.request.query_params.get('ordering', None)
-#
-#         # If ordering is specified, apply it to the queryset
-#         if ordering:
-#             # Remove the '-' if present to check if the field is valid
-#             order_field = ordering[1:] if ordering.startswith('-') else ordering
-#
-#             # Check if the field is in ordering_fields
-#             valid_fields = [f if isinstance(f, str) else f[0] for f in self.ordering_fields]
-#             if order_field in valid_fields:
-#                 queryset = queryset.order_by(ordering)
-#
-#         return queryset
-
-from rest_framework.filters import OrderingFilter
-
-class UserPagination(PageNumberPagination):
-    page_size_query_param = "size"
-    max_page_size = 10
-
-class UserViewSet(ReadOnlyModelViewSet):
+class UsersViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    filter_backends = (SearchFilter, OrderingFilter)
-    search_fields = ("first_name", "last_name")
-    ordering_fields = ["date_joined"]
-    pagination_class = UserPagination
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
+    search_fields = ['first_name', 'last_name', 'id']
+    pagination_class = CustomPagination
+    ordering_fields = ['date_joined', 'runs_finished_count', 'average_rating']
+
+    def get_serializer_class(self):
+        if self.action == 'retrieve':
+            user = self.get_object()
+            if user.is_staff:
+                return DetailCoachSerializer
+            return DetailAthleteSerializer
+        return UserSerializer
 
     def get_queryset(self):
-        qs = self.queryset
-        user_type = self.request.query_params.get("type", None)
-        if user_type:
-            if user_type == "athlete":
-                qs = qs.filter(is_staff=False)
-            elif user_type == "coach":
-                qs = qs.filter(is_staff=True).exclude(is_superuser=True)
+        queryset = super().get_queryset()
 
-        return qs.exclude(is_superuser=True)
+        # Exclude superusers from the queryset
+        queryset = queryset.filter(is_superuser=False)
+
+        # Get the 'type' query parameter
+        user_type = self.request.query_params.get('type', None)
+
+        # Annotate runs_finished_count for all users
+        queryset = queryset.annotate(
+            runs_finished_count=Count('run', filter=Q(run__status='finished'))
+        )
+
+        # If filtering for coaches, annotate average_rating
+        if user_type == 'coach':
+            queryset = queryset.filter(is_staff=True)
+            # queryset = queryset.annotate(average_rating=Avg('coaches__rate'))
+
+        elif user_type == 'athlete':
+            queryset = queryset.filter(is_staff=False)
+
+        queryset = queryset.annotate(average_rating=Avg('coaches__rate'))
+
+        # Get the ordering parameter from the request
+        ordering = self.request.query_params.get('ordering', None)
+
+        # If ordering is specified, apply it to the queryset
+        if ordering:
+            # Remove the '-' if present to check if the field is valid
+            order_field = ordering[1:] if ordering.startswith('-') else ordering
+
+            # Check if the field is in ordering_fields
+            valid_fields = [f if isinstance(f, str) else f[0] for f in self.ordering_fields]
+            if order_field in valid_fields:
+                queryset = queryset.order_by(ordering)
+
+        return queryset
+
+# from rest_framework.filters import OrderingFilter
+#
+# class UserPagination(PageNumberPagination):
+#     page_size_query_param = "size"
+#     max_page_size = 10
+#
+# class UserViewSet(ReadOnlyModelViewSet):
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
+#     filter_backends = (SearchFilter, OrderingFilter)
+#     search_fields = ("first_name", "last_name")
+#     ordering_fields = ["date_joined"]
+#     pagination_class = UserPagination
+#
+#     def get_queryset(self):
+#         qs = self.queryset
+#         user_type = self.request.query_params.get("type", None)
+#         if user_type:
+#             if user_type == "athlete":
+#                 qs = qs.filter(is_staff=False)
+#             elif user_type == "coach":
+#                 qs = qs.filter(is_staff=True).exclude(is_superuser=True)
+#
+#         return qs.exclude(is_superuser=True)
 
 class ChallengeViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = ChallengeRecord.objects.all()
