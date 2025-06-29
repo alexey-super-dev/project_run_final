@@ -229,7 +229,7 @@ class UsersViewSet(viewsets.ReadOnlyModelViewSet):
     search_fields = ['first_name', 'last_name', 'id']
     pagination_class = CustomPagination
     ordering_fields = ['date_joined', 'runs_finished_count', 'average_rating']
-    ordering = ['date_joined']
+    ordering = ['-date_joined']
 
     def get_serializer_class(self):
         if self.action == 'retrieve':
