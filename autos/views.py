@@ -261,19 +261,19 @@ class UsersViewSet(viewsets.ReadOnlyModelViewSet):
             queryset = queryset.filter(is_staff=False)
 
         queryset = queryset.annotate(average_rating=Avg('coaches__rate'))
-
-        # Get the ordering parameter from the request
-        ordering = self.request.query_params.get('ordering', None)
-
-        # If ordering is specified, apply it to the queryset
-        if ordering:
-            # Remove the '-' if present to check if the field is valid
-            order_field = ordering[1:] if ordering.startswith('-') else ordering
-
-            # Check if the field is in ordering_fields
-            valid_fields = [f if isinstance(f, str) else f[0] for f in self.ordering_fields]
-            if order_field in valid_fields:
-                queryset = queryset.order_by(ordering)
+        #
+        # # Get the ordering parameter from the request
+        # ordering = self.request.query_params.get('ordering', None)
+        #
+        # # If ordering is specified, apply it to the queryset
+        # if ordering:
+        #     # Remove the '-' if present to check if the field is valid
+        #     order_field = ordering[1:] if ordering.startswith('-') else ordering
+        #
+        #     # Check if the field is in ordering_fields
+        #     valid_fields = [f if isinstance(f, str) else f[0] for f in self.ordering_fields]
+        #     if order_field in valid_fields:
+        #         queryset = queryset.order_by(ordering)
 
         return queryset
 
