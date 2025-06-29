@@ -264,45 +264,9 @@ class UsersViewSet(viewsets.ReadOnlyModelViewSet):
 
         queryset = queryset.annotate(average_rating=Avg('coaches__rate'))
 
-        # Get the ordering parameter from the request
-        ordering = self.request.query_params.get('ordering', None)
-
-        # If ordering is specified, apply it to the queryset
-        if ordering:
-            # Remove the '-' if present to check if the field is valid
-            order_field = ordering[1:] if ordering.startswith('-') else ordering
-
-            # Check if the field is in ordering_fields
-            valid_fields = [f if isinstance(f, str) else f[0] for f in self.ordering_fields]
-            if order_field in valid_fields:
-                queryset = queryset.order_by(ordering)
-
+        # Let the OrderingFilter handle the ordering
         return queryset
 
-# from rest_framework.filters import OrderingFilter
-#
-# class UserPagination(PageNumberPagination):
-#     page_size_query_param = "size"
-#     max_page_size = 10
-#
-# class UserViewSet(ReadOnlyModelViewSet):
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
-#     filter_backends = (SearchFilter, OrderingFilter)
-#     search_fields = ("first_name", "last_name")
-#     ordering_fields = ["date_joined"]
-#     pagination_class = UserPagination
-#
-#     def get_queryset(self):
-#         qs = self.queryset
-#         user_type = self.request.query_params.get("type", None)
-#         if user_type:
-#             if user_type == "athlete":
-#                 qs = qs.filter(is_staff=False)
-#             elif user_type == "coach":
-#                 qs = qs.filter(is_staff=True).exclude(is_superuser=True)
-#
-#         return qs.exclude(is_superuser=True)
 
 class ChallengeViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = ChallengeRecord.objects.all()
