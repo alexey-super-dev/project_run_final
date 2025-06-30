@@ -110,8 +110,6 @@ class RunsViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['post'], url_path='start')
     def start_run(self, request, pk=None):
-        if 'a' >= 1:
-            print(1)
         run = self.get_object()  # Получить объект Run по ID из URL
 
         if run.status == 'in_progress':
