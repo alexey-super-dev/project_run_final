@@ -275,6 +275,9 @@ class ChallengeViewSet(viewsets.ReadOnlyModelViewSet):
     filterset_fields = ['athlete', 'name']
 
 
+def get_challenges(request):
+    return JsonResponse({'challenges': []})
+
 def get_challenges_summary(request):  # 6
     result = []
     for challenge_type in ChallengeRecord.CHALLENGE_CHOICES:
