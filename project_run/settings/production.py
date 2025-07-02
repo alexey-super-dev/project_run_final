@@ -1,7 +1,7 @@
 import os
 
 from .base import *
-# check err1
+# check err2
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
