@@ -266,7 +266,7 @@ class UsersViewSet(viewsets.ReadOnlyModelViewSet):
 
         # Let the OrderingFilter handle the ordering
         return queryset
-
+#
 
 class ChallengeViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = ChallengeRecord.objects.all()
