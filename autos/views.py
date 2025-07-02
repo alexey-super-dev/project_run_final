@@ -276,7 +276,18 @@ class ChallengeViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 def get_challenges(request):
-    return JsonResponse({'challenges': []})
+    user_id = request.query_params.get("athlete", None)
+    if user_id:
+        user_queryset = User.objects.filter(pk=user_id)
+        if user_queryset:
+            user = user_queryset[0]
+            challenges = ChallengeRecord.objects.filter(athlete=user)
+
+            return Response(challenges, status=status.HTTP_200_OK)
+
+    return Response(
+        ChallengeRecord.objects.all(), status=status.HTTP_200_OK
+    )
 
 def get_challenges_summary(request):  # 6
     result = []

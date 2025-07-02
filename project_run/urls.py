@@ -27,7 +27,7 @@ router = DefaultRouter()
 router.register(r'users', UsersViewSet)
 router.register(r'runs', RunsViewSet)
 router.register(r'positions', PositionViewSet)
-# router.register(r'challenges', ChallengeViewSet)
+router.register(r'challenges', ChallengeViewSet)
 router.register(r'athlete_info', AthleteInfoViewSet)
 router.register(r'collectible_item', CollectableItemViewSet)
 
@@ -37,7 +37,7 @@ urlpatterns = [
     path('api/subscribe_to_coach/<int:id>/', subscribe_to_coach_api_url, name='subscribe_to_coach'),
     path('api/company_details/', get_company_details, name='company_details'),
     path('api/challenges_summary/', get_challenges_summary, name='challenges_summary'),
-    path('api/challenges/', get_challenges, name='challenges_summary'),
+    # path('api/challenges/', get_challenges, name='challenges_summary'),
     path('api/rate_coach/<int:coach_id>/', rate_coach, name='rate_coach'),
     path('api/analytics_for_coach/<int:coach_id>/', analytics_for_coach, name='analytics_for_coach'),
     path('api/upload_file/', UploadXLSX.as_view(), name='unit_location_upload'),
