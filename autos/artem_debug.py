@@ -59,10 +59,13 @@ class UploadFileView(APIView):
         wrong_rows = list()
 
         for row in worksheet.iter_rows(min_row=2, values_only=True):
-            row_serializer = CollectibleItemSerializer(data=dict(zip(headers, row)))
+            data = dict(zip(headers, row))
+            print(f'DEBUG {data}')
+            row_serializer = CollectibleItemSerializer(data=data)
             if row_serializer.is_valid(raise_exception=False):
                 row_serializer.save()
             else:
+                print(f'DEBUG {",".join(wrong_rows)}')
                 wrong_rows.append(list(row))
 
         return Response(wrong_rows, status=status.HTTP_200_OK)
