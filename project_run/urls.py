@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
+from autos.artem_debug import UploadFileView
 from autos.views import get_autos, RunsViewSet, get_company_details, PositionViewSet, UsersViewSet, \
     subscribe_to_coach_api_url, ChallengeViewSet, get_challenges_summary, rate_coach, analytics_for_coach, \
     AthleteInfoViewSet, UploadXLSX, CollectableItemViewSet, get_challenges
@@ -40,7 +41,8 @@ urlpatterns = [
     # path('api/challenges/', get_challenges, name='challenges_summary'),
     path('api/rate_coach/<int:coach_id>/', rate_coach, name='rate_coach'),
     path('api/analytics_for_coach/<int:coach_id>/', analytics_for_coach, name='analytics_for_coach'),
-    path('api/upload_file/', UploadXLSX.as_view(), name='unit_location_upload'),
+    # path('api/upload_file/', UploadXLSX.as_view(), name='unit_location_upload'),
+    path('api/upload_file/', UploadFileView.as_view(), name='unit_location_upload'),
 
     path('api/', include(router.urls))
 ]
