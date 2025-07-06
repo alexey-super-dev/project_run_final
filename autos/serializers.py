@@ -160,8 +160,3 @@ class ChallengeRecordsWithUsersSerializer(serializers.ModelSerializer):
                                 'username': user.username})
         return return_list
 
-
-class AthleteInfoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = AthleteInfo
-        fields = ['user_id', 'weight', 'goals']
