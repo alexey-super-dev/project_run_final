@@ -445,3 +445,4 @@ class CollectableItemViewSet(viewsets.ModelViewSet):
 class AthleteInfoViewSet(viewsets.ModelViewSet):
     queryset = AthleteInfo.objects.all()
     serializer_class = AthleteInfoSerializer
+    lookup_field = 'user_id'  # Use the native user ID for lookup
