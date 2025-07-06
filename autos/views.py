@@ -29,10 +29,10 @@ from rest_framework.viewsets import ReadOnlyModelViewSet
 from .logic import calculate_run_time_by_id, calculate_run_time, calculate_run_time_different_way, calculate_median, \
      validate_url
 from .models import Autos, Run, Position, AthleteCoachRelation, ChallengeRecord, \
-     CollectableItem  # Ensure the Autos model is imported
+    CollectableItem, AthleteInfo  # Ensure the Autos model is imported
 from .serializers import RunSerializer, PositionSerializer, UserSerializer, DetailAthleteSerializer, \
     DetailCoachSerializer, ChallengeRecordSerializer, ChallengeRecordsWithUsersSerializer, \
-    CollectableItemSerializer
+    CollectableItemSerializer, AthleteInfoSerializer
 
 
 def get_autos(request):
@@ -440,3 +440,8 @@ class UploadXLSX(APIView):
 class CollectableItemViewSet(viewsets.ModelViewSet):
     queryset = CollectableItem.objects.all()
     serializer_class = CollectableItemSerializer
+
+
+class AthleteInfoViewSet(viewsets.ModelViewSet):
+    queryset = AthleteInfo.objects.all()
+    serializer_class = AthleteInfoSerializer
