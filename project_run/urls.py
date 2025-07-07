@@ -29,7 +29,7 @@ router.register(r'users', UsersViewSet)
 router.register(r'runs', RunsViewSet)
 router.register(r'positions', PositionViewSet)
 router.register(r'challenges', ChallengeViewSet)
-router.register(r'athlete_info', AthleteInfoViewSet)
+# router.register(r'athlete_info', AthleteInfoViewSet)
 router.register(r'collectible_item', CollectableItemViewSet)
 
 urlpatterns = [
