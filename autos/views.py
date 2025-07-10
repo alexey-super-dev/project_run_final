@@ -446,9 +446,3 @@ class AthleteInfoViewSet(viewsets.ModelViewSet):
     queryset = AthleteInfo.objects.all()
     serializer_class = AthleteInfoSerializer
     lookup_field = 'user_id'  # Use the native user ID for lookup
-
-    def get_object(self):
-        user_id = self.kwargs.get(self.lookup_field)
-        user = get_object_or_404(User, pk=user_id)
-        user_profile, created = AthleteInfo.objects.get_or_create(user=user)
-        return user_profile
