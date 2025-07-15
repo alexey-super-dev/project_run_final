@@ -410,6 +410,8 @@ class UploadXLSX(APIView):
                 if type(sub_row) != types[index]:
                     valid = False
 
+            # TODO add feature here!!!
+
             if not type(row[3]) == float or not (-90 <= row[3] <= 90):
                 valid = False
 
@@ -447,7 +449,4 @@ class AthleteInfoViewSet(viewsets.ModelViewSet):
     serializer_class = AthleteInfoSerializer
     lookup_field = 'user_id'  # Use the native user ID for lookup
 
-    def get_object(self):
-        user_id = self.kwargs.get(self.lookup_field)
-        user = get_object_or_404(User, id=user_id)
-        return user
+
