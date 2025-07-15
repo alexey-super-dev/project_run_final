@@ -450,5 +450,4 @@ class AthleteInfoViewSet(viewsets.ModelViewSet):
     def get_object(self):
         user_id = self.kwargs.get(self.lookup_field)
         user = get_object_or_404(User, id=user_id)
-        user_info, _ = AthleteInfo.objects.get_or_create(user=user)
-        return user_info
+        return user
