@@ -2,8 +2,8 @@ import re
 
 # import requests
 
+from decouple import config, Csv
 from autos.models import Position
-
 
 def calculate_run_time_by_id(run):
     from autos.models import Position
