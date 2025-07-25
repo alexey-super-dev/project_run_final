@@ -182,6 +182,8 @@ class RunsViewSet(viewsets.ModelViewSet):
 class PositionViewSet(viewsets.ModelViewSet):
     queryset = Position.objects.filter()
     serializer_class = PositionSerializer
+    # filter_backends = [DjangoFilterBackend]
+    # filterset_fields = ['run']
 
     def get_queryset(self):
         queryset = Position.objects.all()
