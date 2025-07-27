@@ -19,15 +19,14 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
-from autos.api_views import RunsAPIViewSet
 from autos.artem_debug import UploadFileView
 from autos.views import get_autos, get_company_details, PositionViewSet, UsersViewSet, \
     subscribe_to_coach_api_url, ChallengeViewSet, get_challenges_summary, rate_coach, analytics_for_coach, \
-    UploadXLSX, CollectableItemViewSet, get_challenges, AthleteInfoViewSet
+    UploadXLSX, CollectableItemViewSet, get_challenges, AthleteInfoViewSet, RunsViewSet
 
 router = DefaultRouter()
 router.register(r'users', UsersViewSet)
-router.register(r'runs', RunsAPIViewSet)
+router.register(r'runs', RunsViewSet)
 router.register(r'positions', PositionViewSet)
 router.register(r'challenges', ChallengeViewSet)
 router.register(r'athlete_info', AthleteInfoViewSet)
