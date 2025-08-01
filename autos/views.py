@@ -429,9 +429,13 @@ class AnalyticsForCoachAPIView(APIView):
         speed_avg_value = None
 
         if athletes_with_speed.exists():
+            print(f'DEBUG_1 {athletes_with_speed.exists()}')
             fastest_athlete = athletes_with_speed.first()
+            print(f'DEBUG_2 {athletes_with_speed.first()}')
             if fastest_athlete.avg_speed is not None:
+                print(f'DEBUG_3 {fastest_athlete.id}')
                 speed_avg_user = fastest_athlete.id
+                print(f'DEBUG_4 {fastest_athlete.avg_speed}')
                 speed_avg_value = round(fastest_athlete.avg_speed, 2)
 
         analytics = {
