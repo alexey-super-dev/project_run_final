@@ -428,6 +428,10 @@ class AnalyticsForCoachAPIView(APIView):
         speed_avg_user = None
         speed_avg_value = None
 
+        print(f'DEBUG_0 {User.objects.filter(
+            id__in=subscribed_athletes
+        ).values('run__speed')}')
+
         if athletes_with_speed.exists():
             print(f'DEBUG_1 {athletes_with_speed.exists()}')
             fastest_athlete = athletes_with_speed.first()
