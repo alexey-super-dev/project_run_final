@@ -56,7 +56,8 @@ def calculate_run_time_different_way(run):
     return run_time.total_seconds()
 
 
-def calculate_median(numbers):
+def calculate_median(run):
+    numbers = Position.objects.filter(run=run).values_list('speed', flat=True)
     return sum(numbers) / len(numbers)
 
 
