@@ -447,6 +447,17 @@ class AnalyticsForCoachAPIView(APIView):
                 print(f'DEBUG_4 {fastest_athlete.avg_speed}')
                 speed_avg_value = round(fastest_athlete.avg_speed, 2)
 
+        max_avg_speed_run = (
+            Run.objects.filter(athlete__id__in=subscribed_athletes)
+            .values('athlete_id')
+            .annotate(avg_speed=Avg('speed'))
+            .order_by('-avg_speed')
+            .values('athlete_id', 'avg_speed')
+            .first()
+        )
+        print(f'DEBUG_RUN_1 {max_avg_speed_run['avg_speed']}')
+        print(f'DEBUG_RUN_2 {max_avg_speed_run['athlete_id']}')
+
         analytics = {
             'longest_run_user': longest_run_user,
             'longest_run_value': longest_run_value,
