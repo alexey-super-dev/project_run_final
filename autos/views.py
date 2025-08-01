@@ -415,8 +415,8 @@ class AnalyticsForCoachAPIView(APIView):
             total_distance=Sum('distance')
         ).order_by('-total_distance').first()
 
-        total_run_user = total_distance_by_athlete.athlete_id if total_distance_by_athlete else None
-        total_run_value = total_distance_by_athlete.total_distance if total_distance_by_athlete else None
+        total_run_user = total_distance_by_athlete['athlete_id'] if total_distance_by_athlete else None
+        total_run_value = total_distance_by_athlete['total_distance'] if total_distance_by_athlete else None
 
         athletes_with_speed = User.objects.filter(
             id__in=subscribed_athletes
