@@ -390,7 +390,7 @@ class AnalyticsForCoachAPIView(APIView):
         except User.DoesNotExist:
             return Response({'error': 'Тренер не найден'}, status=status.HTTP_404_NOT_FOUND)
 
-        subscribed_athletes = AthleteCoachRelation.objects.filter(coach_id=coach_id, is_active=True).values_list('athlete_id',
+        subscribed_athletes = AthleteCoachRelation.objects.filter(coach_id=coach_id).values_list('athlete_id',
                                                                                                       flat=True)
 
         if not subscribed_athletes:
