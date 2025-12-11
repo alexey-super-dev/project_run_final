@@ -1,38 +1,26 @@
 import json
-import random
 
 import openpyxl
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.db.models import Max, Sum, Avg, F
 
-from django.shortcuts import get_object_or_404
-from django.http import JsonResponse
-from django.db.models import Max, Sum, Avg
-from django.db.models import Sum, Count, Q, Avg, Max
-from django.http import JsonResponse, HttpResponse
-from django.shortcuts import get_object_or_404
-from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_POST
+from django.db.models import Count, Q
 from geopy.distance import geodesic
 from rest_framework import viewsets, status, filters
 from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
-from rest_framework.filters import SearchFilter
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.views import APIView
-from rest_framework.viewsets import ReadOnlyModelViewSet
 
-from .logic import calculate_run_time_by_id, calculate_run_time, calculate_run_time_different_way, calculate_median, \
+from .logic import calculate_run_time_different_way, calculate_median, \
      validate_url
 from .models import Autos, Run, Position, AthleteCoachRelation, ChallengeRecord, \
-    CollectableItem, AthleteInfo  # Ensure the Autos model is imported
+    CollectableItem  # Ensure the Autos model is imported
 from .serializers import RunSerializer, PositionSerializer, UserSerializer, DetailAthleteSerializer, \
-    DetailCoachSerializer, ChallengeRecordSerializer, ChallengeRecordsWithUsersSerializer, \
-    CollectableItemSerializer, AthleteInfoSerializer
+    DetailCoachSerializer, ChallengeRecordSerializer, CollectableItemSerializer
 
 
 def get_autos(request):
@@ -335,7 +323,7 @@ def rate_coach(request, coach_id):
 
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
-from django.db.models import Max, Sum, Avg, Subquery, OuterRef
+from django.db.models import Max, Sum, Avg
 
 
 # 7
@@ -531,14 +519,3 @@ class CollectableItemViewSet(viewsets.ModelViewSet):
     serializer_class = CollectableItemSerializer
 
 
-class AthleteInfoViewSet(viewsets.ModelViewSet):
-    queryset = AthleteInfo.objects.all()
-    serializer_class = AthleteInfoSerializer
-    lookup_field = 'user_id'  # Use the native user ID for lookup
-
-    def get_object(self):
-        user_id = self.kwargs.get(self.lookup_field)
-        user = get_object_or_404(User, id=user_id)
-        user_info, _ = AthleteInfo.objects.get_or_create(user=user)
-        print('1')
-        return user_info

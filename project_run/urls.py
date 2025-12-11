@@ -22,7 +22,8 @@ from rest_framework.routers import DefaultRouter
 from autos.artem_debug import UploadFileView
 from autos.views import get_autos, get_company_details, PositionViewSet, UsersViewSet, \
     subscribe_to_coach_api_url, ChallengeViewSet, get_challenges_summary, rate_coach, analytics_for_coach, \
-    UploadXLSX, CollectableItemViewSet, get_challenges, AthleteInfoViewSet, RunsViewSet, AnalyticsForCoachAPIView
+    UploadXLSX, CollectableItemViewSet, get_challenges, RunsViewSet, AnalyticsForCoachAPIView
+from autos.user_views import AthleteInfoViewSet
 
 router = DefaultRouter()
 router.register(r'users', UsersViewSet)
