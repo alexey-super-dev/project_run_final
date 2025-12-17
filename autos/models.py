@@ -49,6 +49,7 @@ class ChallengeRecord(models.Model):
     class Meta:
         unique_together = ('athlete', 'name')
 
+
 class AthleteInfo(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     weight = models.IntegerField(null=True, validators=[MinValueValidator(30), MaxValueValidator(200)])

@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 
 from autos.models import AthleteInfo
-from autos.serializers import AthleteInfoSerializer
+from autos.user_serializers import AthleteInfoSerializer
 
 
 class AthleteInfoViewSet(viewsets.ModelViewSet):

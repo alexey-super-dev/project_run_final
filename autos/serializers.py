@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
-from autos.models import Run, Position, AthleteCoachRelation, ChallengeRecord, AthleteInfo, CollectableItem
+from autos.models import Run, Position, AthleteCoachRelation, ChallengeRecord, CollectableItem
 
 
 class PositionSerializer(serializers.ModelSerializer):
@@ -161,7 +161,3 @@ class ChallengeRecordsWithUsersSerializer(serializers.ModelSerializer):
         return return_list
 
 
-class AthleteInfoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = AthleteInfo
-        fields = ['user_id', 'weight']
